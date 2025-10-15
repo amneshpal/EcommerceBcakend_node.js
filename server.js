@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const errorHandler = require("./middlewares/errorMiddleware");
+const swaggerDocs = require("./swagger");
 
 // Routes
 const authRoutes = require("./routes/authRoutes");
@@ -34,6 +35,7 @@ app.use("/api/wishlist", wishlistRoutes);  //Allow users to save products they l
 
 // Error handling
 app.use(errorHandler);
+swaggerDocs(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
