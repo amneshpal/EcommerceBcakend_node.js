@@ -6,6 +6,12 @@
 
 ---
 
+## check Api
+```
+https://ecommercebcakend-node-js.onrender.com/api-docs/
+```
+---
+
 ## Project Overview
 **Vendora** is a multi-role e-commerce backend supporting **Customer, Vendor, and Admin** roles.  
 It provides features like:
