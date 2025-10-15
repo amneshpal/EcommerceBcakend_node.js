@@ -1,7 +1,14 @@
+// 
+
+
+
+
+
+
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-// ✅ Swagger configuration options
+// Swagger configuration
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -24,11 +31,7 @@ const options = {
 
     servers: [
       {
-        url: "http://localhost:5000/api",
-        description: "Local Development Server",
-      },
-      {
-        url: "https://your-deployed-domain.com/api",
+        url: "https://ecommercebcakend-node-js.onrender.com/api", // Use only the deployed URL
         description: "Production Server",
       },
     ],
@@ -52,24 +55,21 @@ const options = {
     ],
   },
 
-  // ✅ Paths to route files for Swagger annotations
-  apis: [
-    "./routes/*.js", // includes all routes: authRoutes, productRoutes, cartRoutes, etc.
-  ],
+  apis: ["./routes/*.js"], // all route files
 };
 
-// ✅ Generate Swagger specification
+// Generate Swagger specification
 const swaggerSpec = swaggerJSDoc(options);
 
-// ✅ Function to integrate Swagger in Express app
+// Integrate Swagger in Express app
 const swaggerDocs = (app) => {
   app.use(
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
-      explorer: true, // enables filter/search bar
+      explorer: true,
       swaggerOptions: {
-        persistAuthorization: true, // keep JWT after refresh
+        persistAuthorization: true,
       },
       customSiteTitle: "Ecommerce API Docs | Amnesh Pal",
       customCss: `
@@ -79,7 +79,7 @@ const swaggerDocs = (app) => {
     })
   );
 
-  console.log("📄 Swagger Docs available at: http://localhost:5000/api-docs");
+  console.log("📄 Swagger Docs available at: https://ecommercebcakend-node-js.onrender.com/api-docs");
 };
 
 module.exports = swaggerDocs;

@@ -42,6 +42,56 @@
 
 
 
+// require("dotenv").config();
+// const express = require("express");
+// const morgan = require("morgan");
+// const cors = require("cors");
+// const connectDB = require("./config/db");
+// const errorHandler = require("./middlewares/errorMiddleware");
+// const swaggerDocs = require("./swagger");
+
+// // Routes
+// const authRoutes = require("./routes/authRoutes");
+// const productRoutes = require("./routes/productRoutes");
+// const orderRoutes = require("./routes/orderRoutes");
+// const cartRoutes = require("./routes/cartRoutes");
+// const paymentRoutes = require("./routes/paymentRoutes");
+// const analyticsRoutes = require("./routes/analyticsRoutes");
+// const wishlistRoutes = require("./routes/wishlistRoutes");
+
+// const app = express();
+// connectDB();
+
+// // Middleware
+// app.use(express.json());
+
+// const corsOptions = {
+//   origin: "*", // ✅ Allow all origins (or replace with your frontend URL)
+//   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
+// app.use(cors(corsOptions));
+
+// app.use(morgan("dev"));
+
+// // Routes
+// app.use("/api/auth", authRoutes);
+// app.use("/api/products", productRoutes);
+// app.use("/api/orders", orderRoutes);
+// app.use("/api/cart", cartRoutes);
+// app.use("/api/payment", paymentRoutes);
+// app.use("/api/analytics", analyticsRoutes);
+// app.use("/api/wishlist", wishlistRoutes);
+
+// // Error handling
+// app.use(errorHandler);
+// swaggerDocs(app);
+
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
@@ -60,21 +110,33 @@ const analyticsRoutes = require("./routes/analyticsRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 
 const app = express();
+
+// ✅ Connect to MongoDB
 connectDB();
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
-
-const corsOptions = {
-  origin: "*", // ✅ Allow all origins (or replace with your frontend URL)
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-app.use(cors(corsOptions));
-
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-// Routes
+// ✅ Enable CORS
+app.use(
+  cors({
+    origin: "*", // Allow all origins; replace with frontend URL in production
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// ✅ Swagger Docs
+swaggerDocs(app);
+
+// ✅ Root route
+app.get("/", (req, res) => {
+  res.send("Ecommerce Backend is running!");
+});
+
+// ✅ API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
@@ -83,9 +145,12 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 
-// Error handling
+// ✅ Error handling
 app.use(errorHandler);
-swaggerDocs(app);
 
+// ✅ Listen on dynamic port for Render
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Swagger Docs: https://ecommercebcakend-node-js.onrender.com/api-docs`);
+});
