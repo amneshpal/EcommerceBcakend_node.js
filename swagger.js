@@ -25,7 +25,7 @@ const options = {
         "🔹 **Admin (Analytics, Management)**",
       contact: {
         name: "Backend Developer - Amnesh Pal",
-        email: "amnesh.pal@uproi.in",
+        email: "amneshpal15@gmail.com",
       },
     },
 
