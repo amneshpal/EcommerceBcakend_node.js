@@ -78,8 +78,6 @@
 // module.exports = swaggerDocs;
 
 
-
-
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -157,7 +155,7 @@ const swaggerDocs = (app) => {
     })
   );
 
-  console.log(`📄 Swagger Docs available at: ${serverUrl}/docs`);
+  console.log(`📄 Swagger Docs available at: ${serverUrl}/api/docs`);
 };
 
 module.exports = swaggerDocs;
